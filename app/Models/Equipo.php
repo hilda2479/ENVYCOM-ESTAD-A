@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Equipo extends Model
 {
-   // use HasFactory;
+    use HasFactory;
     protected $table = 'equipos';
     protected $fillable = [
         'cliente_id', 'tipo_equipo', 'marca', 'modelo', 
@@ -16,11 +16,11 @@ class Equipo extends Model
 
     public function cliente()
     {
-        return $this->belongsTo(Cliente::class, 'cliente_id');
+        return $this->belongsTo(Cliente::class);
     }
 
     public function mantenimientos()
     {
-        return $table->hasMany(Mantenimiento::class, 'equipo_id');
+        return $this->hasMany(Mantenimiento::class, 'equipo_id');
     }
 }

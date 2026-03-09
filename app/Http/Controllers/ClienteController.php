@@ -13,13 +13,16 @@ class ClienteController extends Controller
         return view('clientes.index', compact('clientes'));
     }
 
-    // Muestra el formulario de edición
+    public function create()
+    {
+        return view('clientes.create');
+    }
+
     public function edit(Cliente $cliente)
     {
         return view('clientes.edit', compact('cliente'));
     }
 
-    // Procesa la actualización de los datos
     public function update(Request $request, Cliente $cliente)
     {
         $request->validate([
@@ -35,7 +38,6 @@ class ClienteController extends Controller
                          ->with('mensaje', 'Cliente actualizado correctamente.');
     }
 
-    // Elimina al cliente y sus equipos (por el onDelete cascade que pusimos en la migración)
     public function destroy(Cliente $cliente)
     {
         $cliente->delete();
@@ -45,6 +47,22 @@ class ClienteController extends Controller
 
     public function show(Cliente $cliente)
     {
+
         return view('clientes.show', compact('cliente'));
     }
+
+    public function store(Request $request)
+    {
+        $request->validate([
+            'nombre_cliente' => 'required|min:3',
+            'telefono'       => 'required|digits:10',
+            'correo'         => 'required|email|unique:clientes,correo',
+            'sector'         => 'required',
+        ]);
+
+        Cliente::create($request->all());
+
+        return redirect()->route('clientes.index')
+                         ->with('mensaje', 'Cliente registrado correctamente.');
+    }               
 }

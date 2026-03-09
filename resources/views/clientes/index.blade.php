@@ -2,7 +2,7 @@
     <x-slot name="header">
         <div class="flex justify-between items-center">
             <h2 class="font-black text-xl text-gray-800 uppercase">Lista de Clientes</h2>
-            <a href="{{ route('views/clientes.create') }}" class="bg-[#4A4A4A] text-white px-4 py-2 rounded-md font-bold text-sm">
+            <a href="{{ route('clientes.create') }}" class="bg-[#4A4A4A] text-white px-4 py-2 rounded-md font-bold text-sm">
                 + REGISTRAR NUEVO CLIENTE
             </a>
         </div>
@@ -35,7 +35,7 @@
                         <td class="px-6 py-4 text-gray-600">{{ $cliente->correo }}</td>
                         <td class="px-6 py-4">
                             <div class="flex items-center gap-4">
-                                <a href="{{ route('clientes.show', $cliente->id) }}" 
+                                <a href="{{ route('equipos.index', $cliente->id) }}" 
                                    class="bg-[#DFFF00] text-black px-3 py-1.5 rounded-md text-[10px] font-black uppercase hover:bg-black hover:text-white transition shadow-sm whitespace-nowrap">
                                     Ver Equipos
                                 </a>
