@@ -1,0 +1,1 @@
+<img src="{{ asset('img/logo.jpeg') }}" alt="Logo ENVYCOM" class="h-10 w-auto">
