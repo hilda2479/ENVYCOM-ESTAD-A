@@ -8,19 +8,19 @@ use Illuminate\Database\Eloquent\Model;
 class Equipo extends Model
 {
     use HasFactory;
-    protected $table = 'equipos';
+
     protected $fillable = [
-        'cliente_id', 'tipo_equipo', 'marca', 'modelo', 
-        'SKU', 'fecha', 'proximo_mantenimiento'
+        'cliente_id',
+        'tipo_equipo',
+        'marca',
+        'modelo',
+        'SKU',
+        'fecha',
+        'proximo_mantenimiento',
     ];
 
     public function cliente()
     {
         return $this->belongsTo(Cliente::class);
-    }
-
-    public function mantenimientos()
-    {
-        return $this->hasMany(Mantenimiento::class, 'equipo_id');
     }
 }

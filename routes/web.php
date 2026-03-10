@@ -1,6 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Carbon;
+use App\Models\Cliente;
+use App\Models\Equipo;
 use App\Http\Controllers\ClienteController;
 use App\Http\Controllers\EquipoController;
 
@@ -15,12 +18,16 @@ Route::middleware([
 ])->group(function () {
 
     Route::get('/dashboard', function () {
-        return view('dashboard');
+        $totalClientes = Cliente::count();
+        $totalEquipos = Equipo::count();
+        $alertasMantenimiento = Equipo::whereDate('proximo_mantenimiento', '<=', Carbon::today()->addDays(7))->count();
+
+        return view('dashboard', compact('totalClientes', 'totalEquipos', 'alertasMantenimiento'));
     })->name('dashboard');
 
     Route::resource('clientes', ClienteController::class);
 
-Route::get('/clientes/{cliente}', [App\Http\Controllers\ClienteController::class, 'show'])->name('clientes.show');
+
 
 Route::get('/equipos-registrados', [App\Http\Controllers\EquipoController::class, 'index'])->name('equipos.index');
 

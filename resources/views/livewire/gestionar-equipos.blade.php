@@ -1,69 +1,153 @@
 <div>
-<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-    <div class="bg-white p-6 rounded-lg shadow-md border-t-4 border-[#4A4A4A]">
-        <h3 class="font-black text-sm uppercase mb-4 tracking-tighter text-gray-700">Registrar Nuevo Equipo</h3>
-        
-        @if (session()->has('mensaje'))
-            <div class="bg-green-100 text-green-700 p-2 mb-4 text-xs font-bold uppercase rounded">
-                {{ session('mensaje') }}
-            </div>
-        @endif
+    <div class="flex justify-between items-center mb-8">
+        <h2 class="font-black text-xl text-gray-800 uppercase italic">
+            Inventario del cliente
+        </h2>
 
-        <form wire:submit.prevent="guardar" class="space-y-4">
-            <div>
-                <label class="block text-[10px] font-black uppercase text-gray-500">Tipo</label>
-                <select wire:model="tipo_equipo" class="w-full border-gray-300 rounded text-sm">
-                    <option value="">Seleccionar...</option>
-                    <option value="Impresora">Impresora</option>
-                    <option value="Laptop">Laptop</option>
-                    <option value="PC">PC Escritorio</option>
-                </select>
-            </div>
-            <div>
-                <label class="block text-[10px] font-black uppercase text-gray-500">Marca / Modelo</label>
-                <div class="grid grid-cols-2 gap-2">
-                    <input type="text" wire:model="marca" placeholder="HP" class="w-full border-gray-300 rounded text-sm">
-                    <input type="text" wire:model="modelo" placeholder="LaserJet" class="w-full border-gray-300 rounded text-sm">
-                </div>
-            </div>
-            <div>
-                <label class="block text-[10px] font-black uppercase text-gray-500">Número de Serie / SKU</label>
-                <input type="text" wire:model="SKU" class="w-full border-gray-300 rounded text-sm font-mono">
-            </div>
-            <div>
-                <label class="block text-[10px] font-black uppercase text-gray-500">Próximo Mantenimiento</label>
-                <input type="date" wire:model="proximo_mantenimiento" class="w-full border-gray-300 rounded text-sm">
-            </div>
-
-            <button type="submit" class="w-full bg-[#4A4A4A] text-white py-3 rounded font-black text-xs uppercase hover:bg-black transition">
-                Guardar en Expediente
-            </button>
-        </form>
+        <button wire:click="abrirFormulario"
+                class="bg-[#4A4A4A] hover:bg-black text-white font-black uppercase px-6 py-3 rounded-lg shadow">
+            + Registrar nuevo equipo
+        </button>
     </div>
 
-    <div class="md:col-span-2 bg-white rounded-lg shadow-md overflow-hidden">
+    @if (session()->has('mensaje'))
+        <div class="mb-6 bg-green-100 border border-green-300 text-green-700 px-4 py-3 rounded-lg">
+            {{ session('mensaje') }}
+        </div>
+    @endif
+
+    @if($mostrarFormulario)
+        <div class="bg-white shadow-xl rounded-lg p-6 mb-8 border-t-4 border-[#DFFF00]">
+            <h3 class="text-lg font-black uppercase text-gray-800 mb-4">Nuevo equipo</h3>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                    <label class="block text-xs font-black uppercase text-gray-500 mb-2">Tipo de equipo</label>
+                    <input type="text"
+                           wire:model.defer="tipo_equipo"
+                           class="w-full rounded-lg border-gray-300"
+                           placeholder="Ej. Laptop">
+                    @error('tipo_equipo')
+                        <span class="text-red-500 text-xs">{{ $message }}</span>
+                    @enderror
+                </div>
+
+                <div>
+                    <label class="block text-xs font-black uppercase text-gray-500 mb-2">Marca</label>
+                    <input type="text"
+                           wire:model.defer="marca"
+                           class="w-full rounded-lg border-gray-300"
+                           placeholder="Ej. HP">
+                    @error('marca')
+                        <span class="text-red-500 text-xs">{{ $message }}</span>
+                    @enderror
+                </div>
+
+                <div>
+                    <label class="block text-xs font-black uppercase text-gray-500 mb-2">Modelo</label>
+                    <input type="text"
+                           wire:model.defer="modelo"
+                           class="w-full rounded-lg border-gray-300"
+                           placeholder="Ej. ProBook 440">
+                    @error('modelo')
+                        <span class="text-red-500 text-xs">{{ $message }}</span>
+                    @enderror
+                </div>
+
+                <div>
+                    <label class="block text-xs font-black uppercase text-gray-500 mb-2">Serie / SKU</label>
+                    <input type="text"
+                           wire:model.defer="SKU"
+                           class="w-full rounded-lg border-gray-300"
+                           placeholder="Ej. ABC123456">
+                    @error('SKU')
+                        <span class="text-red-500 text-xs">{{ $message }}</span>
+                    @enderror
+                </div>
+
+                <div>
+                    <label class="block text-xs font-black uppercase text-gray-500 mb-2">Fecha</label>
+                    <input type="date"
+                        wire:model.defer="fecha"
+                        class="w-full rounded-lg border-gray-300">
+                    @error('fecha')
+                        <span class="text-red-500 text-xs">{{ $message }}</span>
+                    @enderror
+                </div>
+
+                <div>
+                    <label class="block text-xs font-black uppercase text-gray-500 mb-2">Próximo mantenimiento</label>
+                    <input type="date"
+                           wire:model.defer="proximo_mantenimiento"
+                           class="w-full rounded-lg border-gray-300">
+                    @error('proximo_mantenimiento')
+                        <span class="text-red-500 text-xs">{{ $message }}</span>
+                    @enderror
+                </div>
+            </div>
+
+            <div class="mt-6 flex gap-3">
+                <button wire:click="guardar"
+                        class="bg-[#DFFF00] hover:bg-lime-300 text-black font-black uppercase px-6 py-3 rounded-lg shadow">
+                    Guardar equipo
+                </button>
+
+                <button wire:click="cerrarFormulario"
+                        class="bg-gray-200 hover:bg-gray-300 text-gray-700 font-black uppercase px-6 py-3 rounded-lg shadow">
+                    Cancelar
+                </button>
+            </div>
+        </div>
+    @endif
+
+    <div class="bg-white shadow-xl rounded-lg overflow-hidden border-t-4 border-[#4A4A4A]">
         <table class="min-w-full divide-y divide-gray-200">
-            <thead class="bg-gray-50">
+            <thead class="bg-gray-50 uppercase text-[10px] font-black text-gray-500">
                 <tr>
-                    <th class="px-6 py-3 text-left text-[10px] font-black text-gray-400 uppercase">Equipo</th>
-                    <th class="px-6 py-3 text-left text-[10px] font-black text-gray-400 uppercase">Serie</th>
-                    <th class="px-6 py-3 text-left text-[10px] font-black text-gray-400 uppercase">Mantenimiento</th>
+                    <th class="px-6 py-3 text-left">Propietario</th>
+                    <th class="px-6 py-3 text-left">Equipo</th>
+                    <th class="px-6 py-3 text-left">Serie / SKU</th>
+                    <th class="px-6 py-3 text-left">Proximo Mantenimiento</th>
                 </tr>
             </thead>
-            <tbody class="divide-y divide-gray-100">
-                @foreach($equipos as $equipo)
-                <tr class="text-sm">
-                    <td class="px-6 py-4 font-bold uppercase">{{ $equipo->tipo_equipo }} <span class="text-gray-400 font-normal">({{ $equipo->marca }})</span></td>
-                    <td class="px-6 py-4 font-mono text-xs">{{ $equipo->SKU }}</td>
-                    <td class="px-6 py-4">
-                        <span class="px-2 py-1 rounded text-[10px] font-black {{ \Carbon\Carbon::parse($equipo->proximo_mantenimiento)->isPast() ? 'bg-red-100 text-red-600' : 'bg-green-100 text-green-600' }}">
-                            {{ \Carbon\Carbon::parse($equipo->proximo_mantenimiento)->format('d/m/Y') }}
-                        </span>
-                    </td>
-                </tr>
-                @endforeach
+
+            <tbody class="divide-y divide-gray-100 uppercase text-xs">
+                @forelse($equipos as $equipo)
+                    <tr class="hover:bg-gray-50">
+                        <td class="px-6 py-4 font-black text-blue-600">
+                            {{ $equipo->cliente->nombre_cliente }}
+                        </td>
+
+                        <td class="px-6 py-4 font-bold">
+                            {{ $equipo->tipo_equipo ?? '-' }}
+                            @if(!empty($equipo->marca))
+                                <span class="text-gray-400">({{ $equipo->marca }} {{ $equipo->modelo }})</span>
+                            @endif
+                        </td>
+
+                        <td class="px-6 py-4 font-mono">
+                            {{ $equipo->SKU ?? '-' }}
+                        </td>
+                        
+
+                        <td class="px-6 py-4">
+                            @if(!empty($equipo->proximo_mantenimiento))
+                                <span class="px-2 py-1 rounded {{ \Carbon\Carbon::parse($equipo->proximo_mantenimiento)->isPast() ? 'bg-red-100 text-red-600' : 'bg-green-100 text-green-600' }}">
+                                    {{ \Carbon\Carbon::parse($equipo->proximo_mantenimiento)->format('d/m/Y') }}
+                                </span>
+                            @else
+                                <span class="text-gray-400">-</span>
+                            @endif
+                        </td>
+                    </tr>
+                @empty
+                    <tr>
+                        <td colspan="4" class="px-6 py-8 text-center text-gray-500 font-bold uppercase">
+                            Este cliente aún no tiene equipos registrados
+                        </td>
+                    </tr>
+                @endforelse
             </tbody>
         </table>
     </div>
-</div>
 </div>

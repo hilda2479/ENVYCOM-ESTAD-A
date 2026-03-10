@@ -35,9 +35,9 @@
                         <td class="px-6 py-4 text-gray-600">{{ $cliente->correo }}</td>
                         <td class="px-6 py-4">
                             <div class="flex items-center gap-4">
-                                <a href="{{ route('equipos.index', $cliente->id) }}" 
-                                   class="bg-[#DFFF00] text-black px-3 py-1.5 rounded-md text-[10px] font-black uppercase hover:bg-black hover:text-white transition shadow-sm whitespace-nowrap">
-                                    Ver Equipos
+                                <a href="{{ route('clientes.show', $cliente) }}"
+                                    class="inline-block px-4 py-2 bg-gray-800 text-white text-xs font-bold uppercase rounded hover:bg-black">
+                                    Ver equipos
                                 </a>
 
                                 <a href="{{ route('clientes.edit', $cliente->id) }}" 
