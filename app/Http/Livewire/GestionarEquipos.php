@@ -7,6 +7,9 @@ use App\Models\Equipo;
 
 class GestionarEquipos extends Component
 {
+
+    public $estatus = 'RECIBIDO';
+
     public $clienteId;
     public $mostrarFormulario = false;
 
@@ -65,7 +68,14 @@ class GestionarEquipos extends Component
 
     public function guardar()
     {
-        $this->validate();
+        $this->validate([
+            'tipo_equipo' => 'required',
+            'marca' => 'required',
+            'modelo' => 'required',
+            'SKU' => 'required|unique:equipos,SKU',
+            'proximo_mantenimiento' => 'required|date',
+            'estatus' => 'required', // <--- Añade validación
+        ]);
 
         Equipo::create([
             'cliente_id' => $this->clienteId,
@@ -73,13 +83,14 @@ class GestionarEquipos extends Component
             'marca' => $this->marca,
             'modelo' => $this->modelo,
             'SKU' => $this->SKU,
-            'fecha' => $this->fecha,
             'proximo_mantenimiento' => $this->proximo_mantenimiento,
+            'estatus' => $this->estatus, // <--- Guarda el estatus
         ]);
 
-        session()->flash('mensaje', 'Equipo registrado correctamente.');
-
-        $this->cerrarFormulario();
+        // Limpia el campo después de guardar
+        $this->reset(['tipo_equipo', 'marca', 'modelo', 'SKU', 'proximo_mantenimiento', 'estatus']);
+        $this->estatus = 'RECIBIDO'; // Reset al valor inicial
+        session()->flash('mensaje', 'Equipo registrado exitosamente.');
     }
 
     public function render()
@@ -89,5 +100,17 @@ class GestionarEquipos extends Component
             ->get();
 
         return view('livewire.gestionar-equipos', compact('equipos'));
+    }
+
+    public function actualizarEstatus($equipoId, $nuevoEstatus)
+    {
+        $equipo = Equipo::find($equipoId);
+
+        if ($equipo) {
+            $equipo->update([
+                'estatus' => $nuevoEstatus
+            ]);
+            session()->flash('mensaje', 'Estatus de ' . $equipo->tipo_equipo . ' actualizado.');
+        }
     }
 }

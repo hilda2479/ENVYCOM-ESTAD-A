@@ -2,7 +2,7 @@
     <x-slot name="header">
         <div class="flex justify-between items-center">
             <h2 class="font-black text-xl text-gray-800 uppercase">
-                EXPEDIENTE: {{ $cliente->nombre_cliente }}
+                Expediente: {{ $cliente->nombre_cliente }}
             </h2>
 
             <a href="{{ route('clientes.index') }}"

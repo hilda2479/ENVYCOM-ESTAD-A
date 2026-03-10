@@ -10,14 +10,15 @@ class Equipo extends Model
     use HasFactory;
 
     protected $fillable = [
-        'cliente_id',
-        'tipo_equipo',
-        'marca',
-        'modelo',
-        'SKU',
-        'fecha',
-        'proximo_mantenimiento',
-    ];
+    'cliente_id', 
+    'tipo_equipo', 
+    'marca', 
+    'modelo', 
+    'SKU', 
+    'fecha', 
+    'proximo_mantenimiento', 
+    'estatus'
+];
 
     public function cliente()
     {
