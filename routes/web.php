@@ -7,6 +7,7 @@ use App\Models\Equipo;
 use App\Http\Controllers\ClienteController;
 use App\Http\Controllers\EquipoController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\AlertaMantenimientoController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -25,4 +26,10 @@ Route::middleware([
 
 
     Route::get('/equipos-registrados', [EquipoController::class, 'index'])->name('equipos.index');
+
+    Route::post('/equipos/{equipo}/configurar-alerta', [AlertaMantenimientoController::class, 'configurar'])
+    ->name('equipos.alerta.configurar');
+
+    Route::post('/equipos/{equipo}/enviar-alerta', [AlertaMantenimientoController::class, 'enviarAhora'])
+    ->name('equipos.alerta.enviar');
 });

@@ -17,7 +17,6 @@ class GestionarEquipos extends Component
     public $marca = '';
     public $modelo = '';
     public $SKU = '';
-    public $fecha = '';
     public $proximo_mantenimiento = '';
 
     protected $rules = [
@@ -25,7 +24,6 @@ class GestionarEquipos extends Component
         'marca' => 'required|string|max:255',
         'modelo' => 'required|string|max:255',
         'SKU' => 'required|string|max:255|unique:equipos,SKU',
-        'fecha' => 'required|date',
         'proximo_mantenimiento' => 'required|date',
     ];
 
@@ -35,7 +33,6 @@ class GestionarEquipos extends Component
         'modelo.required' => 'El modelo es obligatorio.',
         'SKU.required' => 'La serie / SKU es obligatoria.',
         'SKU.unique' => 'Ese SKU ya está registrado.',
-        'fecha.required' => 'La fecha es obligatoria.',
         'proximo_mantenimiento.required' => 'La fecha de mantenimiento es obligatoria.',
     ];
 
@@ -62,7 +59,6 @@ class GestionarEquipos extends Component
         $this->marca = '';
         $this->modelo = '';
         $this->SKU = '';
-        $this->fecha = '';
         $this->proximo_mantenimiento = '';
     }
 
