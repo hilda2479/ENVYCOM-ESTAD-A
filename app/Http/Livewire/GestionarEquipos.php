@@ -19,6 +19,11 @@ class GestionarEquipos extends Component
     public $SKU = '';
     public $proximo_mantenimiento = '';
 
+    public $fallas_reportadas,
+        $accesorios,
+        $diagnostico_inicial,
+        $observaciones;
+
     protected $rules = [
         'tipo_equipo' => 'required|string|max:255',
         'marca' => 'required|string|max:255',
@@ -70,7 +75,7 @@ class GestionarEquipos extends Component
             'modelo' => 'required',
             'SKU' => 'required|unique:equipos,SKU',
             'proximo_mantenimiento' => 'required|date',
-            'estatus' => 'required', // <--- Añade validación
+            'estatus' => 'required',
         ]);
 
         Equipo::create([
@@ -80,13 +85,15 @@ class GestionarEquipos extends Component
             'modelo' => $this->modelo,
             'SKU' => $this->SKU,
             'proximo_mantenimiento' => $this->proximo_mantenimiento,
-            'estatus' => $this->estatus, // <--- Guarda el estatus
+            'estatus' => $this->estatus,
+            'fallas_reportadas' => $this->fallas_reportadas,
+            'accesorios' => $this->accesorios,
+            'diagnostico_inicial' => $this->diagnostico_inicial,
         ]);
 
-        // Limpia el campo después de guardar
-        $this->reset(['tipo_equipo', 'marca', 'modelo', 'SKU', 'proximo_mantenimiento', 'estatus']);
-        $this->estatus = 'RECIBIDO'; // Reset al valor inicial
-        session()->flash('mensaje', 'Equipo registrado exitosamente.');
+        $this->reset(['tipo_equipo', 'marca', 'modelo', 'SKU', 'fallas_reportadas', 'accesorios', 'diagnostico_inicial']);
+        $this->mostrarFormulario = false;
+        session()->flash('mensaje', 'Equipo registrado y orden de servicio creada.');
     }
 
     public function render()

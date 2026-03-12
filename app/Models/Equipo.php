@@ -17,6 +17,11 @@ class Equipo extends Model
         'SKU',
         'proximo_mantenimiento',
         'estatus',
+        'folio',
+        'diagnostico_inicial', 
+        'accesorios', 
+        'fallas_reportadas', 
+        'observaciones',
 
         // Campos de alertas
         'alerta_activa',
@@ -37,6 +42,14 @@ class Equipo extends Model
         'alerta_vencido' => 'boolean',
         'ultima_alerta_enviada_at' => 'datetime',
     ];
+
+    protected static function booted()
+{
+    static::creating(function ($equipo) {
+        $ultimoId = self::max('id') + 1;
+        $equipo->folio = 'ENV-' . date('Y') . '-' . str_pad($ultimoId, 3, '0', STR_PAD_LEFT);
+    });
+}
 
     public function cliente()
     {

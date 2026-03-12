@@ -16,11 +16,12 @@ return new class extends Migration
         //
         Schema::create('mantenimientos', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('equipo_id')->constrained('equipos')->onDelete('cascade');
-            $table->text('descripcion_servicio');
-            $table->text('insumos_utilizados')->nullable();
-            $table->date('fecha_servicio');
-            $table->enum('estado', ['programado', 'completado', 'urgente']);
+            $table->foreignId('equipo_id')->constrained()->onDelete('cascade');
+            $table->text('descripcion_detallada'); // Qué se le hizo
+            $table->text('refacciones_cambiadas')->nullable();
+            $table->decimal('costo_mano_obra', 10, 2)->default(0);
+            $table->decimal('costo_refacciones', 10, 2)->default(0);
+            $table->string('tecnico_responsable');
             $table->timestamps();
         });
     }
