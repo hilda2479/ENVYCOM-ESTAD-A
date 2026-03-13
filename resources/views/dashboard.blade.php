@@ -28,10 +28,10 @@
                     <p class="text-[10px] text-gray-400 italic">Trabajando ahora</p>
                 </div>
 
-                <div class="bg-[#1A1A1A] overflow-hidden shadow-xl sm:rounded-lg p-6 border-l-4 border-[#DFFF00]">
+                <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg p-6 border-l-4 border-green-400">
                     <h3 class="text-[10px] font-black uppercase text-gray-500 tracking-widest">Listos p/ Entrega</h3>
-                    <p class="text-3xl font-black text-[#DFFF00]">{{ $listos }}</p>
-                    <a href="{{ route('equipos.index') }}" class="text-[10px] text-[#DFFF00] underline font-bold uppercase">Ir al inventario →</a>
+                    <p class="text-3xl font-black text-green-600">{{ $listos }}</p>
+                    <a href="{{ route('equipos.index') }}" class="text-[10px] text-green-400 underline font-bold uppercase">Ir al inventario →</a>
                 </div>
 
             </div>

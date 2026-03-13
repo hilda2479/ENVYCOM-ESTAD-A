@@ -80,44 +80,166 @@
                     <th class="px-6 py-3 text-left">Serie / SKU</th>
                     <th class="px-6 py-3 text-left">Estado</th>
                     <th class="px-6 py-3 text-left">Mantenimiento</th>
+                    <th class="px-6 py-3 text-left">Historial técnico</th>
                 </tr>
             </thead>
 
             <tbody class="divide-y divide-gray-100 uppercase text-[11px]">
                 @forelse($equipos as $equipo)
                     <tr class="hover:bg-gray-50 transition-colors" wire:key="equipo-{{ $equipo->id }}">
-                        <td class="px-6 py-4 font-bold">
-                            {{ $equipo->tipo_equipo }} 
+                        <td class="px-6 py-4 font-bold align-top">
+                            {{ $equipo->tipo_equipo }}
                             <span class="text-gray-400 font-normal">({{ $equipo->marca }} {{ $equipo->modelo }})</span>
                         </td>
 
-                        <td class="px-6 py-4 font-mono text-gray-500">
+                        <td class="px-6 py-4 font-mono text-gray-500 align-top">
                             {{ $equipo->SKU ?? '-' }}
                         </td>
 
-                        <td class="px-6 py-4">
-                            <select 
+                        <td class="px-6 py-4 align-top">
+                            <select
                                 wire:change="actualizarEstatus({{ $equipo->id }}, $event.target.value)"
                                 class="text-[9px] font-black uppercase rounded-full border px-2 py-1 cursor-pointer transition-all outline-none focus:ring-0
-                                {{ $equipo->estatus == 'LISTO' ? 'bg-green-100 text-green-700 border-green-200' : 
-                                  ($equipo->estatus == 'EN PROCESO' ? 'bg-yellow-100 text-yellow-700 border-yellow-200' : 
+                                {{ $equipo->estatus == 'LISTO' ? 'bg-green-100 text-green-700 border-green-200' :
+                                  ($equipo->estatus == 'EN PROCESO' ? 'bg-yellow-100 text-yellow-700 border-yellow-200' :
                                   'bg-red-100 text-red-700 border-red-200') }}">
-                                
+
                                 <option value="RECIBIDO" {{ $equipo->estatus == 'RECIBIDO' ? 'selected' : '' }}>🔴 RECIBIDO</option>
                                 <option value="EN PROCESO" {{ $equipo->estatus == 'EN PROCESO' ? 'selected' : '' }}>🟡 EN PROCESO</option>
                                 <option value="LISTO" {{ $equipo->estatus == 'LISTO' ? 'selected' : '' }}>🟢 LISTO</option>
                             </select>
                         </td>
 
-                        <td class="px-6 py-4">
+                        <td class="px-6 py-4 align-top">
                             <span class="px-2 py-1 rounded font-bold {{ \Carbon\Carbon::parse($equipo->proximo_mantenimiento)->isPast() ? 'bg-red-50 text-red-500' : 'bg-gray-50 text-gray-600' }}">
                                 {{ \Carbon\Carbon::parse($equipo->proximo_mantenimiento)->format('d/m/Y') }}
                             </span>
                         </td>
+
+                        <td class="px-6 py-4 align-top">
+                            <div class="space-y-4 min-w-[460px]">
+                                @if($equipo->mantenimientos->count())
+                                    <div class="overflow-x-auto rounded-lg border border-gray-200">
+                                        <table class="min-w-full text-[10px] uppercase">
+                                            <thead class="bg-gray-50 text-gray-500 font-black">
+                                                <tr>
+                                                    <th class="px-3 py-2 text-left">Fecha</th>
+                                                    <th class="px-3 py-2 text-left">Descripción</th>
+                                                    <th class="px-3 py-2 text-left">Insumos</th>
+                                                    <th class="px-3 py-2 text-left">Estado</th>
+                                                    <th class="px-3 py-2 text-left">Costo</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody class="divide-y divide-gray-100">
+                                                @foreach($equipo->mantenimientos as $mantenimiento)
+                                                    <tr class="hover:bg-gray-50">
+                                                        <td class="px-3 py-2">
+                                                            {{ optional($mantenimiento->fecha_servicio)->format('d/m/Y') }}
+                                                        </td>
+                                                        <td class="px-3 py-2 text-gray-700 normal-case">
+                                                            {{ $mantenimiento->descripcion_servicio }}
+                                                        </td>
+                                                        <td class="px-3 py-2 text-gray-700 normal-case">
+                                                            {{ $mantenimiento->insumos_utilizados ?: 'Sin insumos registrados' }}
+                                                        </td>
+                                                        <td class="px-3 py-2">
+                                                            <span class="px-2 py-1 rounded-full text-[9px] font-black uppercase
+                                                                {{ $mantenimiento->estado === 'REALIZADO' ? 'bg-green-100 text-green-700' :
+                                                                   ($mantenimiento->estado === 'EN PROCESO' ? 'bg-yellow-100 text-yellow-700' :
+                                                                   'bg-gray-100 text-gray-600') }}">
+                                                                {{ $mantenimiento->estado }}
+                                                            </span>
+                                                        </td>
+                                                        <td class="px-3 py-2 font-bold text-gray-700">
+                                                            ${{ number_format($mantenimiento->costo ?? 0, 2) }}
+                                                        </td>
+                                                    </tr>
+                                                @endforeach
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                @else
+                                    <div class="px-4 py-3 rounded-lg bg-gray-50 text-gray-500 text-[10px] font-black uppercase">
+                                        Este equipo aún no tiene historial técnico registrado
+                                    </div>
+                                @endif
+
+                                <div>
+                                    <button
+                                        type="button"
+                                        wire:click="toggleFormularioHistorial({{ $equipo->id }})"
+                                        class="bg-[#4A4A4A] hover:bg-black text-white font-black uppercase px-4 py-2 rounded-lg shadow transition text-[10px]">
+                                        {{ ($mostrarFormularioHistorial[$equipo->id] ?? false) ? 'Ocultar formulario' : 'Agregar historial' }}
+                                    </button>
+                                </div>
+
+                                @if($mostrarFormularioHistorial[$equipo->id] ?? false)
+                                    <div class="bg-gray-50 rounded-xl p-4 border border-gray-200">
+                                        <h4 class="text-[10px] font-black uppercase text-gray-700 mb-3">
+                                            Agregar entrada al historial
+                                        </h4>
+
+                                        <form action="{{ route('mantenimientos.store', $equipo->id) }}" method="POST" class="space-y-3">
+                                            @csrf
+
+                                            <div>
+                                                <label class="block text-[10px] font-black uppercase text-gray-500 mb-1">
+                                                    Descripción del servicio
+                                                </label>
+                                                <textarea name="descripcion_servicio" rows="2"
+                                                    class="w-full rounded-lg border-gray-300 text-sm"
+                                                    placeholder="Describe el servicio realizado"></textarea>
+                                            </div>
+
+                                            <div>
+                                                <label class="block text-[10px] font-black uppercase text-gray-500 mb-1">
+                                                    Insumos utilizados
+                                                </label>
+                                                <textarea name="insumos_utilizados" rows="2"
+                                                    class="w-full rounded-lg border-gray-300 text-sm"
+                                                    placeholder="Pasta térmica, limpieza, cable, memoria, etc."></textarea>
+                                            </div>
+
+                                            <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+                                                <div>
+                                                    <label class="block text-[10px] font-black uppercase text-gray-500 mb-1">
+                                                        Fecha del servicio
+                                                    </label>
+                                                    <input type="date" name="fecha_servicio"
+                                                        class="w-full rounded-lg border-gray-300 text-sm">
+                                                </div>
+
+                                                <div>
+                                                    <label class="block text-[10px] font-black uppercase text-gray-500 mb-1">
+                                                        Costo
+                                                    </label>
+                                                    <input type="number" step="0.01" min="0" name="costo"
+                                                        class="w-full rounded-lg border-gray-300 text-sm"
+                                                        placeholder="0.00">
+                                                </div>
+                                            </div>
+
+                                            <div class="pt-2 flex gap-3">
+                                                <button type="submit"
+                                                    class="bg-[#DFFF00] hover:bg-black hover:text-white text-black font-black uppercase px-4 py-2 rounded-lg shadow transition text-[10px]">
+                                                    Guardar historial
+                                                </button>
+
+                                                <button type="button"
+                                                    wire:click="cerrarFormularioHistorial({{ $equipo->id }})"
+                                                    class="bg-gray-100 hover:bg-gray-200 text-gray-600 font-black uppercase px-4 py-2 rounded-lg text-[10px] transition">
+                                                    Cancelar
+                                                </button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                @endif
+                            </div>
+                        </td>
                     </tr>
                 @empty
                     <tr>
-                        <td colspan="4" class="px-6 py-12 text-center text-gray-400 font-black uppercase italic tracking-tighter">
+                        <td colspan="5" class="px-6 py-12 text-center text-gray-400 font-black uppercase italic tracking-tighter">
                             Este cliente aún no tiene equipos registrados
                         </td>
                     </tr>

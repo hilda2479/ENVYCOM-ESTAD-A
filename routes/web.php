@@ -9,6 +9,7 @@ use App\Http\Controllers\EquipoController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\AlertaMantenimientoController;
 use App\Http\Controllers\ReporteController;
+use App\Http\Controllers\MantenimientoController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -24,8 +25,6 @@ Route::middleware([
 
     Route::resource('clientes', ClienteController::class);
 
-
-
     Route::get('/equipos-registrados', [EquipoController::class, 'index'])->name('equipos.index');
 
     Route::get('/equipos/{equipo}/configurar-alerta', [AlertaMantenimientoController::class, 'form'])
@@ -38,4 +37,7 @@ Route::middleware([
         ->name('equipos.alerta.enviar');
 
     Route::get('/reporte/{tipo}', [ReporteController::class, 'reportePeriodo'])->name('reportes.periodo');
+
+    Route::post('/equipos/{equipo}/mantenimientos', [MantenimientoController::class, 'store'])
+        ->name('mantenimientos.store');
 });

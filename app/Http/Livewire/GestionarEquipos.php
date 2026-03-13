@@ -7,11 +7,11 @@ use App\Models\Equipo;
 
 class GestionarEquipos extends Component
 {
-
     public $estatus = 'RECIBIDO';
 
     public $clienteId;
     public $mostrarFormulario = false;
+    public $mostrarFormularioHistorial = [];
 
     public $tipo_equipo = '';
     public $marca = '';
@@ -19,10 +19,10 @@ class GestionarEquipos extends Component
     public $SKU = '';
     public $proximo_mantenimiento = '';
 
-    public $fallas_reportadas,
-        $accesorios,
-        $diagnostico_inicial,
-        $observaciones;
+    public $fallas_reportadas = '';
+    public $accesorios = '';
+    public $diagnostico_inicial = '';
+    public $observaciones = '';
 
     protected $rules = [
         'tipo_equipo' => 'required|string|max:255',
@@ -30,6 +30,7 @@ class GestionarEquipos extends Component
         'modelo' => 'required|string|max:255',
         'SKU' => 'required|string|max:255|unique:equipos,SKU',
         'proximo_mantenimiento' => 'required|date',
+        'estatus' => 'required|string|max:255',
     ];
 
     protected $messages = [
@@ -39,6 +40,7 @@ class GestionarEquipos extends Component
         'SKU.required' => 'La serie / SKU es obligatoria.',
         'SKU.unique' => 'Ese SKU ya está registrado.',
         'proximo_mantenimiento.required' => 'La fecha de mantenimiento es obligatoria.',
+        'estatus.required' => 'El estado inicial es obligatorio.',
     ];
 
     public function mount($clienteId)
@@ -58,6 +60,16 @@ class GestionarEquipos extends Component
         $this->resetValidation();
     }
 
+    public function toggleFormularioHistorial($equipoId)
+    {
+        $this->mostrarFormularioHistorial[$equipoId] = !($this->mostrarFormularioHistorial[$equipoId] ?? false);
+    }
+
+    public function cerrarFormularioHistorial($equipoId)
+    {
+        $this->mostrarFormularioHistorial[$equipoId] = false;
+    }
+
     public function limpiarFormulario()
     {
         $this->tipo_equipo = '';
@@ -65,18 +77,17 @@ class GestionarEquipos extends Component
         $this->modelo = '';
         $this->SKU = '';
         $this->proximo_mantenimiento = '';
+        $this->estatus = 'RECIBIDO';
+
+        $this->fallas_reportadas = '';
+        $this->accesorios = '';
+        $this->diagnostico_inicial = '';
+        $this->observaciones = '';
     }
 
     public function guardar()
     {
-        $this->validate([
-            'tipo_equipo' => 'required',
-            'marca' => 'required',
-            'modelo' => 'required',
-            'SKU' => 'required|unique:equipos,SKU',
-            'proximo_mantenimiento' => 'required|date',
-            'estatus' => 'required',
-        ]);
+        $this->validate();
 
         Equipo::create([
             'cliente_id' => $this->clienteId,
@@ -89,17 +100,19 @@ class GestionarEquipos extends Component
             'fallas_reportadas' => $this->fallas_reportadas,
             'accesorios' => $this->accesorios,
             'diagnostico_inicial' => $this->diagnostico_inicial,
+            'observaciones' => $this->observaciones,
         ]);
 
-        $this->reset(['tipo_equipo', 'marca', 'modelo', 'SKU', 'fallas_reportadas', 'accesorios', 'diagnostico_inicial']);
+        $this->limpiarFormulario();
         $this->mostrarFormulario = false;
+
         session()->flash('mensaje', 'Equipo registrado y orden de servicio creada.');
     }
 
     public function render()
     {
         $equipos = Equipo::where('cliente_id', $this->clienteId)
-            ->with('cliente')
+            ->with(['cliente', 'mantenimientos'])
             ->get();
 
         return view('livewire.gestionar-equipos', compact('equipos'));
@@ -113,6 +126,7 @@ class GestionarEquipos extends Component
             $equipo->update([
                 'estatus' => $nuevoEstatus
             ]);
+
             session()->flash('mensaje', 'Estatus de ' . $equipo->tipo_equipo . ' actualizado.');
         }
     }

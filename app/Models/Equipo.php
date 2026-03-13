@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Mantenimiento;
 
 class Equipo extends Model
 {
@@ -15,15 +16,9 @@ class Equipo extends Model
         'marca',
         'modelo',
         'SKU',
+        'folio',
         'proximo_mantenimiento',
         'estatus',
-        'folio',
-        'diagnostico_inicial', 
-        'accesorios', 
-        'fallas_reportadas', 
-        'observaciones',
-
-        // Campos de alertas
         'alerta_activa',
         'alerta_dias_antes',
         'dias_anticipacion_alerta',
@@ -44,15 +39,20 @@ class Equipo extends Model
     ];
 
     protected static function booted()
-{
-    static::creating(function ($equipo) {
-        $ultimoId = self::max('id') + 1;
-        $equipo->folio = 'ENV-' . date('Y') . '-' . str_pad($ultimoId, 3, '0', STR_PAD_LEFT);
-    });
-}
+    {
+        static::creating(function ($equipo) {
+            $ultimoId = self::max('id') + 1;
+            $equipo->folio = 'ENV-' . date('Y') . '-' . str_pad($ultimoId, 3, '0', STR_PAD_LEFT);
+        });
+    }
 
     public function cliente()
     {
         return $this->belongsTo(Cliente::class);
+    }
+
+    public function mantenimientos()
+    {
+        return $this->hasMany(Mantenimiento::class, 'equipo_id')->latest();
     }
 }
