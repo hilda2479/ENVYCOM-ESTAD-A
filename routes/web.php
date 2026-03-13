@@ -40,4 +40,7 @@ Route::middleware([
 
     Route::post('/equipos/{equipo}/mantenimientos', [MantenimientoController::class, 'store'])
         ->name('mantenimientos.store');
+
+    Route::get('/dashboard-indicadores', [DashboardController::class, 'indicadores'])
+        ->name('dashboard.indicadores');
 });

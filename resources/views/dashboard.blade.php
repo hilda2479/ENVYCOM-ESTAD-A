@@ -3,8 +3,14 @@
         <h2 class="font-black text-xl text-gray-800 leading-tight uppercase italic">
             {{ __('ENVYCOM - Dashboard de Gestión') }}
         </h2>
+        <div class="flex mb-6 w-full">
+    <a href="{{ route('dashboard.indicadores') }}"
+       class="ml-auto bg-[#DFFF00] hover:bg-black hover:text-white text-black font-black uppercase px-5 py-3 rounded-lg shadow transition text-xs">
+        Ver panel de indicadores
+    </a>
+</div>
     </x-slot>
-
+    
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             
