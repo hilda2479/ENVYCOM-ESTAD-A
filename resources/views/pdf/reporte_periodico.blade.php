@@ -6,7 +6,7 @@
     <title>{{ $titulo }}</title>
     <style>
         body {
-            font-family: 'Helvetica', sans-serif;
+            /*font-family: 'Helvetica', sans-serif;*/
             text-transform: uppercase;
             font-size: 10px;
             color: #333;

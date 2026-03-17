@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title>Alerta de mantenimiento</title>
 </head>
-<body style="margin:0; padding:0; background-color:#f4f5f7; font-family:Arial, Helvetica, sans-serif; color:#1f2937;">
+<body style="margin:0; padding:0; background-color:#f4f5f7; color:#1f2937;">
     <table width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color:#f4f5f7; margin:0; padding:30px 0;">
         <tr>
             <td align="center">

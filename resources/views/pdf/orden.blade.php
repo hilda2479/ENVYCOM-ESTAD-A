@@ -3,7 +3,7 @@
 <head>
     <title>Orden de Servicio - {{ $equipo->folio }}</title>
     <style>
-        body { font-family: sans-serif; text-transform: uppercase; font-size: 10px; }
+        /*body { font-family: sans-serif; text-transform: uppercase; font-size: 10px; }*/
         .header { background: #1a1a1a; color: white; padding: 20px; text-align: center; }
         .folio { color: #DFFF00; font-size: 18px; font-weight: bold; }
         .section { margin-top: 20px; border-bottom: 1px solid #eee; padding-bottom: 10px; }
