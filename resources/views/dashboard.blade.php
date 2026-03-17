@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-black text-xl text-gray-800 leading-tight uppercase italic">
-            {{ __('ENVYCOM - Dashboard de Gestión') }}
+        <h2 class="font-black text-xl text-gray-800 uppercase">
+            {{ __('Administración Envycom') }}
         </h2>
         <div class="flex mb-6 w-full">
     <a href="{{ route('dashboard.indicadores') }}"

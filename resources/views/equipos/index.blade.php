@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <div class="flex justify-between items-center mb-6">
-    <h2 class="text-2xl font-black text-gray-800 uppercase italic">
+    <h2 class="font-black text-xl text-gray-800 uppercase">
         Inventario Global
     </h2>
     
