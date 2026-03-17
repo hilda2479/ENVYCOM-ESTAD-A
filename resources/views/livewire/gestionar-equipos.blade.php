@@ -1,6 +1,6 @@
 <div>
     <div class="flex justify-between items-center mb-8">
-        <h2 class="font-black text-xl text-gray-800 uppercase italic">
+        <h2 class="font-black text-xl text-gray-800 uppercase">
             Inventario del cliente
         </h2>
 
