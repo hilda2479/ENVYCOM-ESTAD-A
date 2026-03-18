@@ -46,7 +46,7 @@
                 </div>
 
                 <div>
-                    <label class="block text-[10px] font-black uppercase text-gray-500 mb-1">Próximo Mantenimiento</label>
+                    <label class="block text-[10px] font-black uppercase text-gray-500 mb-1">Fecha de recepción del equipo</label>
                     <input type="date" wire:model.defer="proximo_mantenimiento" class="w-full rounded-lg border-gray-300 text-sm">
                     @error('proximo_mantenimiento') <span class="text-red-500 text-[10px] font-bold">{{ $message }}</span> @enderror
                 </div>

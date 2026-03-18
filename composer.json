@@ -10,6 +10,7 @@
         "doctrine/dbal": "3.7",
         "doctrine/event-manager": "1.2",
         "guzzlehttp/guzzle": "^7.2",
+        "ladumor/laravel-pwa": "^1.0",
         "laravel/framework": "^9.19",
         "laravel/jetstream": "2.16",
         "laravel/sanctum": "^3.0",

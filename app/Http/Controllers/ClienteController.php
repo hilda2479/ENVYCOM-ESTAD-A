@@ -64,5 +64,36 @@ class ClienteController extends Controller
 
         return redirect()->route('clientes.index')
                          ->with('mensaje', 'Cliente registrado correctamente.');
-    }               
+    }
+    
+    public function archivos($id)
+    {
+        $cliente = \App\Models\Cliente::findOrFail($id);
+
+        return view('clientes.archivos', compact('cliente'));
+    }
+
+    public function subirArchivo(Request $request, $id)
+    {
+        $cliente = \App\Models\Cliente::findOrFail($id);
+
+        $request->validate([
+            'archivo' => 'required|file|mimes:pdf,jpg,jpeg,png,doc,docx,xls,xlsx|max:10240',
+        ]);
+
+        $archivo = $request->file('archivo');
+        $ruta = $archivo->store('documentos_clientes', 'public');
+
+        \App\Models\DocumentoCliente::create([
+            'cliente_id' => $cliente->id,
+            'nombre_original' => $archivo->getClientOriginalName(),
+            'ruta' => $ruta,
+            'extension' => $archivo->getClientOriginalExtension(),
+            'mime_type' => $archivo->getMimeType(),
+            'peso' => $archivo->getSize(),
+        ]);
+
+        return back()->with('mensaje', 'Archivo subido correctamente.');
+    }
+        
 }

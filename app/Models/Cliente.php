@@ -20,4 +20,9 @@ class Cliente extends Model
     {
         return $this->hasMany(Equipo::class, 'cliente_id');
     }
+
+    public function documentos()
+    {
+        return $this->hasMany(DocumentoCliente::class);
+    }
 }

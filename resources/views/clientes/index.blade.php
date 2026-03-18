@@ -23,7 +23,9 @@
                         <th class="px-6 py-3 text-left text-xs font-black text-gray-500 uppercase">Sector</th>
                         <th class="px-6 py-3 text-left text-xs font-black text-gray-500 uppercase">Teléfono</th>
                         <th class="px-6 py-3 text-left text-xs font-black text-gray-500 uppercase">Correo</th>
-                        <th class="px-6 py-3 text-left text-xs font-black text-gray-500 uppercase">Acciones</th>
+                        <th class="px-6 py-4 text-center">Archivos</th>
+                        <th class="px-6 py-3 text-center text-xs font-black text-gray-500 uppercase">Acciones</th>
+
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-gray-200 text-sm">
@@ -33,6 +35,12 @@
                         <td class="px-6 py-4 text-gray-600">{{ $cliente->sector }}</td>
                         <td class="px-6 py-4 text-gray-600">{{ $cliente->telefono }}</td>
                         <td class="px-6 py-4 text-gray-600">{{ $cliente->correo }}</td>
+                        <td class="px-6 py-4 text-center">
+                            <a href="{{ route('clientes.archivos', $cliente->id) }}"
+                            class="inline-block bg-[#DFFF00] hover:bg-black hover:text-white text-black font-black uppercase px-4 py-2 rounded-lg shadow transition text-[10px]">
+                                Archivos
+                            </a>
+                        </td>
                         <td class="px-6 py-4">
                             <div class="flex items-center gap-4">
                                 <a href="{{ route('clientes.show', $cliente) }}"

@@ -10,6 +10,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\AlertaMantenimientoController;
 use App\Http\Controllers\ReporteController;
 use App\Http\Controllers\MantenimientoController;
+use App\Http\Controllers\DocumentoClienteController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -43,4 +44,16 @@ Route::middleware([
 
     Route::get('/dashboard-indicadores', [DashboardController::class, 'indicadores'])
         ->name('dashboard.indicadores');
+    
+    Route::get('/clientes/{cliente}/archivos', [ClienteController::class, 'archivos'])
+    ->name('clientes.archivos');
+
+    Route::post('/clientes/{cliente}/archivos', [ClienteController::class, 'subirArchivo'])
+    ->name('clientes.archivos.subir');
+
+    Route::get('/clientes/documentos/{documento}/descargar', [DocumentoClienteController::class, 'descargar'])
+        ->name('clientes.documentos.descargar');
+
+    Route::delete('/clientes/documentos/{documento}', [DocumentoClienteController::class, 'eliminar'])
+        ->name('clientes.documentos.eliminar');
 });
