@@ -5,6 +5,11 @@
     <title>ENVYCOM</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     @vite(['resources/css/bienvenida.css'])
+
+    <!-- PWA Manifest -->
+     <meta name="theme-color" content="#6777ef">
+     <link rel="apple-touch-icon" href="{{ asset('img/logo.jpeg') }}">
+     <link rel="manifest" href="/manifest.json">
 </head>
 <body>
 
@@ -26,5 +31,14 @@
         </div>
     </section>
 
+    <script src="{{ asset('/sw.js') }}"></script>
+    <script>
+            if (!navigator.serviceWorker.controller) {
+                    navigator.serviceWorker.register('/sw.js').then(function(reg) {
+                        console.log('Service Worker registrado con éxito:' + reg.scope);
+                    });
+            }
+</script>
 </body>
+
 </html>

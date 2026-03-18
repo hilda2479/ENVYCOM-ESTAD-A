@@ -1,0 +1,17 @@
+{
+    "name": "Envycom - T.I",
+    "short_name": "Envycom",
+    "start_url": "/index.php",
+    "background_color": "#DFFF00",
+    "description": "Submayorista consultor T.I",
+    "display": "fullscreen",
+    "theme_color": "#6777ef",
+    "icons": [
+        {
+            "src": "img/logo.jpeg",
+            "sizes": "72x72",
+            "type": "image/png",
+            "purpose": "any"
+        }
+    ]
+}
