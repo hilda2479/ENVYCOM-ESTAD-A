@@ -54,9 +54,9 @@
                 <div>
                     <label class="block text-[10px] font-black uppercase text-gray-500 mb-1">Estado Inicial</label>
                     <select wire:model="estatus" class="w-full border-gray-300 rounded-lg text-sm uppercase font-black">
-                        <option value="RECIBIDO">🔴 RECIBIDO</option>
-                        <option value="EN PROCESO">🟡 EN PROCESO</option>
-                        <option value="LISTO">🟢 LISTO</option>
+                        <option value="RECIBIDO">RECIBIDO</option>
+                        <option value="EN PROCESO"> EN PROCESO</option>
+                        <option value="LISTO"> LISTO</option>
                     </select>
                 </div>
             </div>
@@ -74,7 +74,7 @@
 
     <div class="bg-white shadow-xl rounded-lg overflow-hidden border-t-4 border-[#4A4A4A]">
         <table class="min-w-full divide-y divide-gray-200">
-            <thead class="bg-gray-50 uppercase text-[10px] font-black text-gray-500 italic">
+            <thead class="text-[10px] font-black uppercase text-gray-400 tracking-widest">
                 <tr>
                     <th class="px-6 py-4 text-left">Equipo / Marca</th>
                     <th class="px-6 py-3 text-left">Serie / SKU</th>

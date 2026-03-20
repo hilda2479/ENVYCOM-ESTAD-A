@@ -25,6 +25,7 @@
         font-family: 'Inter', sans-serif;
     }
 </style>
+<link rel="manifest" href="{{ asset('manifest.json') }}">
     </head>
     <body class="font-sans antialiased">
         <x-jet-banner />
