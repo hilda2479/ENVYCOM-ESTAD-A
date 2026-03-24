@@ -1,5 +1,5 @@
 {
-    "name": "Envycom - T.I",
+    "name": "Envycom",
     "short_name": "Envycom",
     "start_url": "/index.php",
     "background_color": "#DFFF00",
@@ -8,9 +8,9 @@
     "theme_color": "#6777ef",
     "icons": [
         {
-            "src": "img/logo.jpeg",
+            "src": "logo.jpeg",
             "sizes": "72x72",
-            "type": "image/png",
+            "type": "image/jpeg",
             "purpose": "any"
         }
     ]

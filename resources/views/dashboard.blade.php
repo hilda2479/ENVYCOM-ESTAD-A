@@ -53,7 +53,7 @@
             @endif
 
             <div class="mt-8">
-                <h3 class="font-black text-gray-800 uppercase italic mb-4 flex items-center">
+                <h3 class="font-black text-xl text-gray-800 uppercase">
                     <span class="bg-yellow-400 w-2 h-6 mr-2 shadow-sm"></span>
                     Prioridad: Equipos en reparación (Más antiguos)
                 </h3>
@@ -61,12 +61,12 @@
                 <div class="bg-white shadow-xl rounded-lg overflow-hidden border-t-4 border-yellow-400">
                     <div class="overflow-x-auto">
                         <table class="min-w-full divide-y divide-gray-200">
-                            <thead class="bg-gray-50 uppercase text-[10px] font-black text-gray-500 italic">
+                            <thead class="text-[10px] font-black uppercase text-gray-400 tracking-widest">
                                 <tr>
-                                    <th class="px-6 py-4 text-left">Cliente</th>
-                                    <th class="px-6 py-4 text-left">Equipo / Marca</th>
-                                    <th class="px-6 py-4 text-left">Tiempo Transcurrido</th>
-                                    <th class="px-6 py-4 text-right">Acción</th>
+                                    <th class="text-[10px] font-black uppercase text-gray-400 tracking-widest">Cliente</th>
+                                    <th class="text-[10px] font-black uppercase text-gray-400 tracking-widest">Equipo / Marca</th>
+                                    <th class="text-[10px] font-black uppercase text-gray-400 tracking-widest">Tiempo Transcurrido</th>
+                                    <th class="text-[10px] font-black uppercase text-gray-400 tracking-widest">Acción</th> 
                                 </tr>
                             </thead>
                             <tbody class="divide-y divide-gray-100 text-[11px] uppercase">
@@ -93,8 +93,8 @@
                                     </tr>
                                 @empty
                                     <tr>
-                                        <td colspan="4" class="px-6 py-12 text-center text-gray-400 font-black uppercase italic tracking-tighter">
-                                            🎉 ¡Excelente! No tienes equipos pendientes de reparación.
+                                        <td colspan="4" class="px-6 py-12 text-center text-gray-400 font-black tracking-tighter">
+                                            ¡Excelente! No tienes equipos pendientes de reparación.
                                         </td>
                                     </tr>
                                 @endforelse
