@@ -48,3 +48,4 @@ class AlertaMantenimientoController extends Controller
         return back()->with('mensaje', 'Alerta enviada correctamente.');
     }
 }
+
