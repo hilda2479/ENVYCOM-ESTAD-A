@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Cliente;
 use Illuminate\Http\Request;
+use App\Http\Requests\StoreClienteRequest;
 
 class ClienteController extends Controller
 {
@@ -51,19 +52,12 @@ class ClienteController extends Controller
         return view('clientes.show', compact('cliente'));
     }
 
-    public function store(Request $request)
+    public function store(StoreClienteRequest $request)
     {
-        $request->validate([
-            'nombre_cliente' => 'required|min:3',
-            'telefono'       => 'required|digits:10',
-            'correo'         => 'required|email|unique:clientes,correo',
-            'sector'         => 'required',
-        ]);
-
-        Cliente::create($request->all());
+        Cliente::create($request->validated());
 
         return redirect()->route('clientes.index')
-                         ->with('mensaje', 'Cliente registrado correctamente.');
+            ->with('success', 'Cliente creado correctamente.');
     }
     
     public function archivos($id)

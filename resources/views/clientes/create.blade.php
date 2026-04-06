@@ -18,6 +18,8 @@
         <div class="bg-white p-6 rounded-lg shadow-md border-t-4 border-[#4A4A4A]">
             <h3 class="font-bold mb-4 uppercase">Nuevo Registro</h3>
 
+            <x-jet-validation-errors class="mb-4" />
+
             <form action="{{ route('clientes.store') }}" method="POST">
                 @csrf
 
