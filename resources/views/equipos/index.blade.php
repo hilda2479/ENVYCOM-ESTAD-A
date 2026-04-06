@@ -22,13 +22,13 @@
             <div class="bg-gray-100 px-4 py-2 text-[10px] font-black text-gray-400 uppercase">Selecciona Periodo</div>
             
             <a href="{{ route('reportes.periodo', 'diario') }}" class="block px-4 py-2 text-xs font-bold text-gray-700 hover:bg-red-50 hover:text-red-600 transition">
-                📅 Reporte de Hoy
+                 Reporte de Hoy
             </a>
             <a href="{{ route('reportes.periodo', 'semanal') }}" class="block px-4 py-2 text-xs font-bold text-gray-700 hover:bg-red-50 hover:text-red-600 transition">
-                📊 Esta Semana
+                 Esta Semana
             </a>
             <a href="{{ route('reportes.periodo', 'mensual') }}" class="block px-4 py-2 text-xs font-bold text-gray-700 hover:bg-red-50 hover:text-red-600 transition">
-                📈 Mes Actual
+                 Mes Actual
             </a>
     </div>
 </div>
