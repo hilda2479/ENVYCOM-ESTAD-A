@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Cliente;
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreClienteRequest;
+use App\Http\Requests\UpdateClienteRequest;
 
 class ClienteController extends Controller
 {
@@ -24,7 +25,7 @@ class ClienteController extends Controller
         return view('clientes.edit', compact('cliente'));
     }
 
-    public function update(Request $request, Cliente $cliente)
+    public function update(UpdateClienteRequest $request, Cliente $cliente)
     {
         $request->validate([
             'nombre_cliente' => 'required|min:3',

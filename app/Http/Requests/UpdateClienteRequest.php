@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreClienteRequest extends FormRequest
+class UpdateClienteRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,14 +24,10 @@ class StoreClienteRequest extends FormRequest
     public function rules()
     {
         return [
-            'nombre_cliente' => [
-                'required', 
-                'string', 
-                'max:100', 
-                'regex:/^[a-zA-Z\sñÑáéíóúÁÉÍÓÚ]+$/u'
-            ],
-            'correo' => 'nullable|email|unique:clientes,correo',
-            'telefono' => 'nullable|digits:10',
+            'nombre_cliente' => 'required|string|max:100',
+            'telefono' => 'required|string|max:10',
+            'correo' => 'required|email|unique:clientes,correo,' . $this->route('cliente')->id,
+            'sector' => 'required|in:Educación,Gobierno,Particular'
         ];
     }
 
@@ -39,8 +35,8 @@ class StoreClienteRequest extends FormRequest
     {
         return [
             'nombre.regex' => 'El nombre solo puede contener letras y espacios.',
-            'email.unique' => 'El correo electrónico ya está registrado.',
-            'telefono.digits' => 'El teléfono debe tener exactamente 10 dígitos.',
+            'telefono.digits' => 'El teléfono debe tener 10 dígitos.',
+            'correo.unique' => 'Este correo ya pertenece a otro cliente.'
         ];
     }
 }
