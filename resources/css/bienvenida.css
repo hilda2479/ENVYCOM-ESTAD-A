@@ -1,8 +1,9 @@
+/* resources/css/bienvenida.css */
+
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-   /* font-family: Arial, Helvetica, sans-serif;*/
 }
 
 body {
@@ -26,7 +27,7 @@ body {
     font-weight: 900;
     color: #000;
     margin-bottom: 25px;
-    text-transform: uppercase; /* Para asegurar mayúsculas */
+    text-transform: uppercase;
 }
 
 .hero-text p {
@@ -43,7 +44,7 @@ body {
 }
 
 .btn-primary {
-    background: #4A4A4A; /* El color gris que pediste */
+    background: #4A4A4A;
     color: white;
     padding: 15px 35px;
     border-radius: 8px;
@@ -70,18 +71,46 @@ body {
     box-shadow: 0 20px 40px rgba(0,0,0,0.2);
 }
 
+/* --- SECCIÓN RESPONSIVA (AÑADE ESTO AL FINAL) --- */
+
 @media (max-width: 900px) {
     .hero {
-        flex-direction: column;
+        flex-direction: column-reverse; /* Imagen arriba, texto abajo en tablets/móviles */
         text-align: center;
+        padding: 40px 5%;
     }
+
     .hero-text, .hero-image {
         width: 100%;
     }
+
     .hero-text {
-        margin-bottom: 40px;
+        margin-top: 30px; /* Espacio después de la imagen */
     }
+
+    .hero-text h1 {
+        font-size: 32px; /* Tamaño reducido para pantallas pequeñas */
+    }
+
+    .hero-text p {
+        margin: 0 auto 30px auto; /* Centra el párrafo */
+    }
+
     .buttons {
         justify-content: center;
+    }
+
+    .hero-image img {
+        max-width: 80%; /* Evita que la imagen sea demasiado grande */
+    }
+}
+
+@media (max-width: 480px) {
+    .hero-text h1 {
+        font-size: 28px; /* Más pequeño para teléfonos */
+    }
+    
+    .btn-primary {
+        width: 100%; /* Botón a lo ancho en teléfonos */
     }
 }
