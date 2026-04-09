@@ -13,7 +13,7 @@ class MantenimientoController extends Controller
     {
         $equipo->mantenimientos()->create(array_merge(
             $request->validated(),
-            ['estado' => 'REALIZADO']
+            ['estado' => 'completado']
         ));
 
         return back()->with('mensaje', 'Historial técnico registrado correctamente.');

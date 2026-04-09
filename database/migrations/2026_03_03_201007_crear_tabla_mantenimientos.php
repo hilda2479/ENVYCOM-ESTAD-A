@@ -19,7 +19,7 @@ return new class extends Migration
             $table->text('descripcion_servicio');
             $table->text('insumos_utilizados')->nullable();
             $table->date('fecha_servicio');
-            $table->enum('estado', ['programado', 'completado', 'urgente']);
+            $table->enum('estado', ['programado', 'completado', 'urgente'])->default('completado');
             $table->decimal('costo', 10, 2)->default(0);
             $table->timestamps();
         });
