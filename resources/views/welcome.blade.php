@@ -2,14 +2,14 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>ENVYCOM</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ENVYCOM</title>
+    
     @vite(['resources/css/bienvenida.css'])
 
-    <!-- PWA Manifest -->
-     <meta name="theme-color" content="#6777ef">
-     <link rel="apple-touch-icon" href="{{ asset('img/logo.jpeg') }}">
-     <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#6777ef">
+    <link rel="apple-touch-icon" href="{{ asset('img/logo.jpeg') }}">
+    <link rel="manifest" href="{{ asset('manifest.json') }}">
 </head>
 <body>
 
@@ -27,18 +27,21 @@
         </div>
 
         <div class="hero-image">
-            <img src="/img/bienvenida.jpeg" alt="Bienvenida ENVYCOM">
+            <img src="{{ asset('img/bienvenida.jpeg') }}" alt="Bienvenida ENVYCOM">
         </div>
     </section>
 
-    <script src="{{ asset('/sw.js') }}"></script>
+    <script src="{{ asset('sw.js') }}"></script>
     <script>
-            if (!navigator.serviceWorker.controller) {
-                    navigator.serviceWorker.register('/sw.js').then(function(reg) {
-                        console.log('Service Worker registrado con éxito:' + reg.scope);
-                    });
-            }
-</script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', function() {
+                navigator.serviceWorker.register('/sw.js').then(function(reg) {
+                    console.log('Service Worker registrado con éxito: ', reg.scope);
+                }, function(err) {
+                    console.log('Fallo en el registro del Service Worker: ', err);
+                });
+            });
+        }
+    </script>
 </body>
-
 </html>
