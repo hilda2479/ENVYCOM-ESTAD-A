@@ -25,22 +25,18 @@ class GestionarEquipos extends Component
     public $observaciones = '';
 
     protected $rules = [
-        'tipo_equipo' => 'required|string|max:255',
-        'marca' => 'required|string|max:255',
-        'modelo' => 'required|string|max:255',
-        'SKU' => 'required|string|max:255|unique:equipos,SKU',
+        'tipo_equipo' => 'required|string|max:30',
+        'marca' => 'required|string|max:15',
+        'modelo' => 'required|string|max:10',
+        'SKU' => 'required|string|max:50|unique:equipos,SKU',
         'proximo_mantenimiento' => 'required|date',
         'estatus' => 'required|string|max:255',
     ];
 
     protected $messages = [
-        'tipo_equipo.required' => 'El tipo de equipo es obligatorio.',
-        'marca.required' => 'La marca es obligatoria.',
-        'modelo.required' => 'El modelo es obligatorio.',
-        'SKU.required' => 'La serie / SKU es obligatoria.',
-        'SKU.unique' => 'Ese SKU ya está registrado.',
-        'proximo_mantenimiento.required' => 'La fecha de mantenimiento es obligatoria.',
-        'estatus.required' => 'El estado inicial es obligatorio.',
+        'marca.max' => 'La marca no puede tener más de 15 caracteres.',
+        'modelo.max' => 'El modelo es demasiado largo (máximo 10).',
+        'tipo_equipo.max' => 'El tipo de equipo no debe exceder los 30 caracteres.',
     ];
 
     public function mount($clienteId)

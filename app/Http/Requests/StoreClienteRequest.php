@@ -39,7 +39,8 @@ class StoreClienteRequest extends FormRequest
     {
         return [
             'nombre.regex' => 'El nombre solo puede contener letras y espacios.',
-            'email.unique' => 'El correo electrónico ya está registrado.',
+            'correo.email' => 'El correo electrónico debe ser una dirección de correo válida.',
+            'correo.unique' => 'El correo electrónico ya está registrado.',
             'telefono.digits' => 'El teléfono debe tener exactamente 10 dígitos.',
         ];
     }
